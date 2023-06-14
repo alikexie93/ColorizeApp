@@ -42,10 +42,6 @@ struct ContentView: View {
             isInputActive = false
         }
     }
-    
-    private func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
