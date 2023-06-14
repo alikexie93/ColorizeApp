@@ -8,45 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var redValue = Double.random(in: 0...255)
-    @State private var greenValue = Double.random(in: 0...255)
-    @State private var blueValue = Double.random(in: 0...255)
+    @State private var redValue = Double.random(in: 0...255).rounded()
+    @State private var greenValue = Double.random(in: 0...255).rounded()
+    @State private var blueValue = Double.random(in: 0...255).rounded()
+    
+    @FocusState private var isInputActive: Bool
     
     var body: some View {
         ZStack {
-            Color(.black)
-                .ignoresSafeArea()
             VStack(spacing: 24) {
-                ColorizeView(color: Color(
-                    red: redValue/255,
-                    green: greenValue/255,
-                    blue: blueValue/255)
-                )
+                ColorizeView(red: redValue, green: greenValue, blue: blueValue)
                 Spacer()
-                HStack {
+                VStack {
                     SliderView(value: $redValue, color: .red)
-                    TextFieldView(value: $redValue)
-                }
-                HStack {
                     SliderView(value: $greenValue, color: .green)
-                    TextFieldView(value: $greenValue)
-                }
-                HStack {
                     SliderView(value: $blueValue, color: .blue)
-                    TextFieldView(value: $blueValue)
                 }
             }
-            .padding()
-            .onTapGesture {
-                hideKeyboard()
-            }
+            Spacer()
+            .frame(height: 150)
+            .focused($isInputActive)
             .toolbar {
-                ToolbarItem(placement: .keyboard) {
+                ToolbarItemGroup(placement: .keyboard) {
                     Button("Done") {
-                        hideKeyboard()
+                        isInputActive = false
                     }
                 }
             }
+        }
+        .padding()
+        .background(.black)
+        .onTapGesture {
+            isInputActive = false
         }
     }
     

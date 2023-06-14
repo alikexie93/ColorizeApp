@@ -8,38 +8,27 @@
 import SwiftUI
 
 struct TextFieldView: View {
-    @Binding var value: Double
+    
+    @Binding var text: String
+    
+    let action: () -> Void
     
     var body: some View {
-        TextField("Value", value: $value, formatter: NumberFormatter())
-            .modified()
-            .frame(width: 60)
+        TextField("0", text: $text) { _ in
+            withAnimation {
+                action()
+            }
+        }
+        .frame(width: 55, alignment: .trailing)
+        .multilineTextAlignment(.trailing)
+        .textFieldStyle(.roundedBorder)
+        .keyboardType(.numberPad)
     }
 }
 
 
 struct TextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldView(value: .constant(0.5))
-    }
-}
-
-struct TFViewModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(.white)
-            )
-            .font(.title2)
-            .foregroundColor(.white)
-    }
-}
-
-extension TextField {
-    func modified() -> some View {
-        modifier(TFViewModifier())
+        TextFieldView(text: .constant("123"), action: {})
     }
 }

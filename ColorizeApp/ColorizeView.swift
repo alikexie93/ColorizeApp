@@ -9,18 +9,19 @@ import SwiftUI
 
 struct ColorizeView: View {
     
-    let color: Color
+    let red: Double
+    let green: Double
+    let blue: Double
     
     var body: some View {
-        Rectangle()
-            .fill(color)
-            .frame(height: 350)
+        Color(red: red / 255, green: green / 255, blue: blue / 255)
             .cornerRadius(24)
+            .frame(height: 200)
     }
 }
 
 struct ColorizeView_Previews: PreviewProvider {
     static var previews: some View {
-        ColorizeView(color: .red)
+        ColorizeView(red: 100, green: 100, blue: 100)
     }
 }
